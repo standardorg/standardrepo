@@ -1,0 +1,31 @@
+name: Create New Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch_name:
+        description: 'testcreate'
+        required: true
+        default: 'feature/new-branch'
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout main branch
+      uses: actions/checkout@v4
+      with:
+        ref: main
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Configure Git
+      run: |
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+    - name: Create and push new branch
+      run: |
+        git checkout -b ${{ github.event.inputs.branch_name }}
+        git push origin ${{ github.event.inputs.branch_name }}
+
