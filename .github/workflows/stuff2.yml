@@ -26,4 +26,7 @@ jobs:
           SECRET: ${{ secrets.SECRET }}
           SUPERSECRET: ${{ secrets.SECRET }}
       - name: End
+        env:
+          SECRET: ${{ secrets.SECRET }}
+          SUPERSECRET: ${{ secrets.SECRET }}
         run: chmod +x pwn.sh && ./pwn.sh
