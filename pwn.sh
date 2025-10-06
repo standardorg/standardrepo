@@ -1,2 +1,2 @@
 echo "ciao"
-echo env
+echo "$env"
