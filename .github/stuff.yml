@@ -1,31 +1,28 @@
-name: Create New Branch
+name: Stuff
 
 on:
-  workflow_dispatch:
-    inputs:
-      branch_name:
-        description: 'testcreate'
-        required: true
-        default: 'feature/new-branch'
+  issue_comment:
+    types: [created, edited]
+
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
 
 jobs:
-  create-branch:
+  update:
+    name: Execution
     runs-on: ubuntu-latest
-
+    if: ${{ contains(github.event.comment.body, 'update_code') }}
     steps:
-    - name: Checkout main branch
-      uses: actions/checkout@v4
-      with:
-        ref: main
-        token: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Configure Git
-      run: |
-        git config user.name "${{ github.actor }}"
-        git config user.email "${{ github.actor }}@users.noreply.github.com"
-
-    - name: Create and push new branch
-      run: |
-        git checkout -b ${{ github.event.inputs.branch_name }}
-        git push origin ${{ github.event.inputs.branch_name }}
-
+      - name: Checkout
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+        with:
+          token: ${{ secrets.BOT_TOKEN_GITHUB }}
+      - name: Execute
+        run: hub pr checkout ${{ github.event.issue.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: End
+        run: echo "ok"
