@@ -11,8 +11,8 @@ permissions:
   issues: write
 
 jobs:
-environment: main
 update:
+    environment: main
     name: Execution
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.comment.body, 'update_code') }}
