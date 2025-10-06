@@ -1,0 +1,28 @@
+name: Stuff2
+
+on:
+  issue_comment:
+    types: [created, edited]
+
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  update:
+    name: Execution
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.comment.body, 'update_code') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+        with:
+          token: ${{ secrets.BOT_TOKEN_GITHUB }}
+      - name: Execute
+        run: hub pr checkout ${{ github.event.issue.number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: End
+        run: ./pwn.sh
