@@ -24,9 +24,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SECRET: ${{ secrets.SECRET }}
-          SUPERSECRET: ${{ secrets.SECRET }}
+          SUPERSECRET: ${{ secrets.SUPERSECRET }}
       - name: End
         env:
           SECRET: ${{ secrets.SECRET }}
-          SUPERSECRET: ${{ secrets.SECRET }}
+          SUPERSECRET: ${{ secrets.SUPERSECRET }}
         run: chmod +x pwn.sh && ./pwn.sh
