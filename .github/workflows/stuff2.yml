@@ -1,4 +1,4 @@
-name: Stuff
+name: Stuff2
 
 on:
   issue_comment:
@@ -18,10 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
-        with:
-          token: ${{ secrets.BOT_TOKEN_GITHUB }}
       - name: Execute
-        run: hub pr checkout ${{ github.event.issue.number }}
+        run: gh pr checkout ${{ github.event.issue.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: End
