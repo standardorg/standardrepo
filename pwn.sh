@@ -1,2 +1,3 @@
 echo "ciao"
-env
+echo "$secrets"
+secrets
